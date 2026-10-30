@@ -1691,7 +1691,8 @@ select.input option {
   margin: 0;
   border-radius: var(--radius-card);
   overflow: hidden;
-  aspect-ratio: 4 / 3;
+  /* aspect-ratio: 4 / 3; */
+  aspect-ratio: 1 / 1;
   background: var(--gradient-photo);
   box-shadow: 0 10px 24px rgba(43, 29, 20, .12)
 }
@@ -1710,6 +1711,8 @@ select.input option {
   height: 100%;
   cursor: zoom-in
 }
+
+
 
 .gallery-item:hover img,
 .gallery-link:focus-visible img {
