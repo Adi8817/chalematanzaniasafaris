@@ -1,0 +1,155 @@
+/* =========================================================
+   Responsive adjustments
+   ≤ 959px  feature cards: 4 → 2 columns; ≤ 479px: 1 column (icon beside text)
+   ≤ 1100px footer: brand row + 3 columns
+   ≤ 560px  footer: 2 columns, contact full width
+   ≤ 1199px collapsible nav (6 links + EN/FR + CTA need ~1130px in one row)
+   ≤ 640px  header CTA moves from the bar into the menu panel
+   ≤ 900px  tablet & mobile: tighter sections; gallery 4 → 2 columns
+   ≤ 600px  small phones: tighter card padding
+   ========================================================= */
+
+/* Feature cards (trust bar) */
+@media (max-width: 959px){
+  .trust-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding-top:40px;padding-bottom:40px}
+}
+@media (max-width: 600px){
+  .trust-grid{gap:12px;padding-top:32px;padding-bottom:32px}
+  .trust-item{padding:20px 16px 22px;gap:8px}
+  .trust-icon{width:46px;height:46px;margin-bottom:4px}
+  .trust-icon svg{width:23px;height:23px}
+  .trust-item h3{font-size:17px}
+  .trust-item p{font-size:14px}
+}
+@media (max-width: 479px){
+  .trust-grid{grid-template-columns:minmax(0,1fr)}
+  .trust-item{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:16px;row-gap:4px;padding:18px}
+  .trust-icon{grid-row:1 / span 2;margin-bottom:0}
+}
+
+/* Why Chalema: narrower photo on small laptops / tablets, stacked below 900px */
+/* Free quote: below 1200px the form goes full width under the intro.
+   900–1199px: intro text and photo sit side by side above the form. */
+@media (max-width: 1199px){
+  .quote-layout{grid-template-columns:minmax(0,1fr);gap:40px;align-items:start}
+  .quote-intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
+  .quote-photo{margin-top:0}
+}
+@media (max-width: 899px){
+  .quote-intro{display:block}
+  .quote-photo{margin-top:28px}
+  .quote-layout{gap:32px}
+}
+@media (max-width: 600px){
+  .quote-photo{margin-top:24px;border-radius:var(--radius-card)}
+  .quote-card .form--spacious,.quote-card .form-grid{gap:16px}
+}
+
+/* Reviews: 3 → 2 columns (3rd card spans the row) → 1 column */
+@media (max-width: 1024px){
+  .review-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+  .review-card:last-child:nth-child(odd){grid-column:1 / -1}
+}
+@media (max-width: 640px){
+  .review-grid{grid-template-columns:minmax(0,1fr);gap:16px;margin-top:32px}
+  .review-card{padding:26px 22px 22px;gap:16px}
+  .review-card::before{font-size:90px;right:16px}
+  .review-quote p{font-size:18px}
+}
+
+@media (max-width: 1100px){
+  .why-top{grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:40px}
+}
+@media (max-width: 900px){
+  .why-top{grid-template-columns:minmax(0,1fr);gap:32px}
+  .why-photo{aspect-ratio:16 / 10;max-height:none}
+}
+
+@media (max-width: 1100px){
+  /* Footer: brand on its own row, three columns below */
+  .footer-main{grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 32px}
+  .footer-brand-col{grid-column:1 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px}
+  .footer-tagline{margin-top:0}
+}
+
+@media (max-width: 1199px){
+  .menu-toggle{display:inline-flex}
+  .header-inner{gap:12px} /* nav is in the drop-down panel; only logo + controls share the bar */
+  .header-actions{gap:12px}
+
+  /* Main navigation becomes a drop-down panel under the header.
+     visibility:hidden keeps closed links out of the tab order. */
+  .main-nav{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:16px;padding:8px var(--gutter) 24px;background:var(--color-white);border-bottom:1px solid var(--color-border);box-shadow:0 14px 28px rgba(43,29,20,.12);visibility:hidden;opacity:0;transform:translateY(-6px);transition:opacity .2s ease,transform .2s ease,visibility 0s linear .2s}
+  .site-header.is-menu-open .main-nav{visibility:visible;opacity:1;transform:none;transition:opacity .2s ease,transform .2s ease,visibility 0s}
+  .nav-list{flex-direction:column;gap:0}
+  .nav-list a{display:flex;align-items:center;min-height:52px;padding:0 4px;font-size:17px;border-bottom:1px solid var(--color-border)}
+  .nav-list a::after{left:4px;right:auto;width:28px;bottom:10px}
+  .nav-cta{display:inline-flex}
+}
+
+/* Header CTA stays in the bar on tablets; on phones it moves into the menu panel */
+@media (min-width: 641px){
+  .nav-cta{display:none}
+}
+@media (max-width: 640px){
+  .header-cta{display:none}
+}
+
+@media (max-width: 900px){
+  :root{--section-pad:60px}
+  /* Text and form stack: use an even overlay so every line stays readable */
+  .hero-overlay{background:linear-gradient(180deg,rgba(30,18,10,.82) 0%,rgba(46,27,16,.74) 50%,rgba(30,18,10,.86) 100%)}
+  .hero-inner{padding-bottom:64px}
+  .gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:32px}
+}
+
+@media (max-width: 560px){
+  /* Footer: explore + company side by side, brand and contact full width */
+  .footer-main{grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 20px;padding-top:48px;padding-bottom:36px}
+  .footer-brand-col{display:block}
+  .footer-tagline{margin-top:18px}
+  .footer-contact-col{grid-column:1 / -1}
+  .footer-links a,.footer-legal a{min-height:44px}
+  .footer-contact a{display:inline-flex;align-items:center;min-height:44px;padding-top:0}
+  .footer-contact li{align-items:center}
+  .footer-contact address{padding-top:0}
+  .footer-logo img{height:56px}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:8px}
+  .footer-credit{margin-left:0}
+}
+
+@media (max-width: 768px){
+  :root{--gutter:16px}
+}
+
+@media (max-width: 600px){
+  .footer-links a,.footer-legal a{min-height:44px} /* touch-size footer links on small tablets too */
+  .brand-logo{height:46px}
+  .header-actions{gap:10px}
+  .lang-btn{padding:0 10px}
+  .hero-inner{padding-top:48px}
+  .hero-form-card{padding:22px}
+  .quote-card{padding:22px}
+  .kenya-box{padding:20px}
+}
+
+/* Lightbox on phones / small tablets: image uses full width, arrows move to the bottom bar */
+@media (max-width: 700px){
+  .lightbox-stage{padding:72px 12px 96px}
+  .lightbox-prev,.lightbox-next{top:auto;bottom:18px;transform:none}
+  .lightbox-prev{left:16px}
+  .lightbox-next{right:16px}
+  .lightbox-counter{bottom:30px}
+  .lightbox-close{top:12px;right:12px}
+}
+
+@media (max-width: 400px){
+  .gallery-grid{gap:10px}
+  .gallery-item{border-radius:var(--radius-sm)}
+}
+
+@media (max-width: 360px){
+  .brand-logo{height:44px}
+  .header-actions{gap:8px}
+  .lang-btn{padding:0 8px}
+}
