@@ -9,19 +9,21 @@
      first paint, avoiding a flash of the wrong language.
    ========================================================= */
 (function () {
-  'use strict';
+  "use strict";
 
-  var SUPPORTED = ['en', 'fr'];
-  var DEFAULT_LANG = 'en';
-  var STORAGE_KEY = 'chalema-lang';
+  var SUPPORTED = ["en", "fr"];
+  var DEFAULT_LANG = "en";
+  var STORAGE_KEY = "chalema-lang";
 
   function getInitialLang() {
-    var fromUrl = new URLSearchParams(window.location.search).get('lang');
+    var fromUrl = new URLSearchParams(window.location.search).get("lang");
     if (SUPPORTED.indexOf(fromUrl) !== -1) return fromUrl;
     try {
       var stored = window.localStorage.getItem(STORAGE_KEY);
       if (SUPPORTED.indexOf(stored) !== -1) return stored;
-    } catch (e) { /* storage unavailable */ }
+    } catch (e) {
+      /* storage unavailable */
+    }
     return DEFAULT_LANG;
   }
 
@@ -29,43 +31,56 @@
     if (SUPPORTED.indexOf(lang) === -1) lang = DEFAULT_LANG;
     document.documentElement.lang = lang;
 
-    document.querySelectorAll('[data-i18n]').forEach(function (el) {
-      var value = el.getAttribute('data-' + lang);
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var value = el.getAttribute("data-" + lang);
       if (value === null) return;
-      var attr = el.getAttribute('data-i18n-attr');
+      var attr = el.getAttribute("data-i18n-attr");
       if (attr) el.setAttribute(attr, value);
       else el.textContent = value;
     });
 
-    document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
-      btn.setAttribute('aria-pressed', String(btn.getAttribute('data-set-lang') === lang));
+    document.querySelectorAll("[data-set-lang]").forEach(function (btn) {
+      btn.setAttribute(
+        "aria-pressed",
+        String(btn.getAttribute("data-set-lang") === lang),
+      );
     });
 
     // Hidden form fields that record the visitor's language
-    document.querySelectorAll('input[data-lang-field]').forEach(function (input) {
-      input.value = lang;
-    });
+    document
+      .querySelectorAll("input[data-lang-field]")
+      .forEach(function (input) {
+        input.value = lang;
+      });
 
-    try { window.localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* ignore */ }
+    try {
+      window.localStorage.setItem(STORAGE_KEY, lang);
+    } catch (e) {
+      /* ignore */
+    }
 
-    document.dispatchEvent(new CustomEvent('languagechange', { detail: { lang: lang } }));
+    document.dispatchEvent(
+      new CustomEvent("languagechange", { detail: { lang: lang } }),
+    );
   }
 
   // Apply immediately to <html> so CSS shows the right language on first paint
   var initial = getInitialLang();
   document.documentElement.lang = initial;
 
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener("DOMContentLoaded", function () {
     applyLang(initial);
-    document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        applyLang(btn.getAttribute('data-set-lang'));
+    document.querySelectorAll("[data-set-lang]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        applyLang(btn.getAttribute("data-set-lang"));
       });
     });
   });
 
   window.ChalemaLanguage = {
     set: applyLang,
-    get: function () { return document.documentElement.lang; }
+    get: function () {
+      return document.documentElement.lang;
+    },
   };
 })();
